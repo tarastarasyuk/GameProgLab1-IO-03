@@ -22,6 +22,20 @@ public class PlayerController : MonoBehaviour
         _isTouchingGround = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayer);
         _direction = Input.GetAxis("Horizontal");
 
+        HandleDirectionMovement();
+        HandleJump();
+    }
+
+    private void HandleJump()
+    {
+        if (Input.GetButton("Jump") && _isTouchingGround)
+        {
+            _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
+        }
+    }
+
+    private void HandleDirectionMovement()
+    {
         if (_direction > 0F)
         {
             _body.velocity = new Vector2(_direction * speed, _body.velocity.y);
@@ -33,11 +47,6 @@ public class PlayerController : MonoBehaviour
         else
         {
             _body.velocity = new Vector2(0, _body.velocity.y);
-        }
-
-        if (Input.GetButton("Jump") && _isTouchingGround)
-        {
-            _body.velocity = new Vector2(_body.velocity.x, jumpSpeed);
         }
     }
 }
